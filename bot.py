@@ -75,3 +75,17 @@ async def auto_back(event):
 
 print("✅ AFK Bot is running...")
 client.run_until_disconnected()
+
+@client.on(events.NewMessage())
+async def auto_reply(event):
+    global afk, reason, start_time
+    if afk:
+        # Check if reply allowed in this chat type
+        if (event.is_private and afk_private) or (event.is_group and afk_groups):
+            # Send AFK reply to everyone, ignore dictionary for now
+            elapsed = int(time.time() - start_time)
+            hours, remainder = divmod(elapsed, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            elapsed_str = f"{hours}h {minutes}m {seconds}s" if hours else f"{minutes}m {seconds}s"
+            msg = f"⚪ I'm currently AFK: {reason} (since {elapsed_str})"
+            await event.reply(msg)
