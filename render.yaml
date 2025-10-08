@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: telegram-afk-bot
+    env: docker
+    plan: free
+    envVars:
+      - key: BOT_TOKEN
+        value: 8002687114:AAGeXNTVLZwCYT0Qo_kR5vKwC02jeTAuM9Y
+    autoDeploy: true
